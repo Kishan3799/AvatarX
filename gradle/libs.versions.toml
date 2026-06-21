@@ -9,12 +9,14 @@ activityCompose = "1.13.0"
 kotlin = "2.4.0"
 composeBom = "2026.06.00"
 camerax = "1.6.1"
+materialIconsExtended = "1.7.8"
 mediapipeTasksVision = "0.20230731"
 navigationCompose = "2.9.8"
 coil = "2.7.0"
 androidxLifecycle = "2.11.0"
 
 [libraries]
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

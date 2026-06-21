@@ -11,14 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.kishan.avatarx.ui.theme.AvatarXTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             AvatarXTheme {
+                Scaffold() { paddingValues ->
+                    AvatarXApp(modifier = Modifier.padding(paddingValues).padding(all = 16.dp))
+                }
 
             }
         }
