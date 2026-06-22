@@ -31,48 +31,25 @@ import androidx.core.content.ContextCompat
 fun PermissionScreen(onGranted: () -> Unit) {
     val context = LocalContext.current
     var permissionDenied by remember { mutableStateOf(false) }
+
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            onGranted()
-        } else {
-            permissionDenied = true
-        }
-    }
+    ) { isGranted -> if (isGranted) onGranted() else permissionDenied = true }
 
     LaunchedEffect(Unit) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            onGranted()
-        }
+        val alreadyGranted = ContextCompat.checkSelfPermission(
+            context, Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+        if (alreadyGranted) onGranted() else launcher.launch(Manifest.permission.CAMERA)
     }
 
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(
-                imageVector = Icons.Rounded.PhotoCamera,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp)
-            )
-            Spacer(Modifier.height(16.dp))
-            Text("AvatarX needs camera access")
-            Spacer(Modifier.height(16.dp))
-            Text(if (permissionDenied) "Camera access is required for AvatarX to work" else "Requesting Camera Permission")
+            Text(if (permissionDenied) "Camera access is required for AvatarX to work" else "Requesting camera permission…")
             if (permissionDenied) {
                 Spacer(Modifier.height(16.dp))
-                Button(onClick = {
-                    val permissionCheckResult = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                    if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                        onGranted()
-                    } else {
-                        launcher.launch(Manifest.permission.CAMERA)
-                    }
-                }) {
-                    Text("Grant Permission")
-                }
+                Button(onClick = { launcher.launch(Manifest.permission.CAMERA) }) { Text("Grant Permission") }
             }
-
         }
     }
 }
-

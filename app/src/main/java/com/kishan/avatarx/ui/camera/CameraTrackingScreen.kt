@@ -5,9 +5,13 @@ import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material3.Button
@@ -81,7 +85,7 @@ fun CameraTrackingScreen(
 
         viewModel.mesaurements?.let { m ->
             Card(
-                modifier = Modifier.align(Alignment.TopStart).padding(16.dp),
+                modifier = Modifier.align(Alignment.TopStart).windowInsetsPadding(WindowInsets.statusBars).padding(16.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.Black.copy(0.6f)))
             {
                 Column(Modifier.padding(12.dp)) {
@@ -93,12 +97,12 @@ fun CameraTrackingScreen(
 
         IconButton(
             { viewModel.toggleCamera()},
-            modifier = Modifier.align(Alignment.TopEnd).padding(16.dp)
+            modifier = Modifier.align(Alignment.TopEnd).windowInsetsPadding(WindowInsets.statusBars).padding(16.dp)
         ) {
             Icon(imageVector = Icons.Default.Cameraswitch, contentDescription = "Switch Camera", tint = Color.White)
         }
 
-        Button(onClick = onContinue, modifier = Modifier.align(Alignment.BottomCenter).padding(24.dp)) {
+        Button(onClick = onContinue, modifier = Modifier.align(Alignment.BottomCenter).windowInsetsPadding(WindowInsets.navigationBars).padding(24.dp)) {
             Text("Continue to Try-On")
         }
     }
